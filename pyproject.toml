@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "habit-tracker"
+version = "1.0.0"
+description = "A habit tracking backend with a command-line interface."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["click>=8.1", "questionary>=2.0", "rich>=13.7"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6", "mypy>=1.10"]
+
+[project.scripts]
+habit = "habit_tracker.cli:main"
+
+[tool.setuptools.package-data]
+habit_tracker = ["schema.sql"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM", "ARG", "D"]
+# Self-explanatory functions and methods need no docstring.
+ignore = ["D102", "D103", "D105", "D107"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src", "tests"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
